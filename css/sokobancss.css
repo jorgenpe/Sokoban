@@ -1,0 +1,47 @@
+  
+#cubeHolder {
+    background-color: white;
+    height: 720px;
+    width: 855px;
+    border: 1px solid black;
+}
+
+
+.wall {
+    width: 25px;
+    height: 25px;
+    border: 10px solid rgb(186, 186, 196);
+    background-color:  black;
+    float: left;
+}
+
+.background {
+    width: 45px;
+    height: 45px;
+    
+    background-color: rgb(153, 126, 4);
+    float: left;
+}
+.block {
+    width: 43px;
+    height: 43px;
+    border: 1px solid rgb(8, 8, 8);
+    background-color: red;
+    float: left;
+}
+.player {
+    width: 43px;
+    height: 43px;
+    border: 1px solid rgb(8, 8, 8);
+    background-color: rgb(9, 59, 223);
+    float: left;
+}
+
+.goal {
+    width: 45px;
+    height: 45px;
+    
+    background-color: green;
+    float: left;
+}
+
