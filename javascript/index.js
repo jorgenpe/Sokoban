@@ -107,11 +107,11 @@ function move(number, axelDirection){
         if(cName.className === "background" || cName.className === "goal" )
         {
             cName.className = "block";
-            document.getElementById(coord((number*2), axelDirection)).replaceWith(cName);
+            //document.getElementById(coord((number*2), axelDirection)).replaceWith(cName);
             console.log(number + " : " + coord(number, axelDirection));
             cName = direction(number, axelDirection, true);
             cName.className = "player";
-            document.getElementById(coord(number, axelDirection)).replaceWith(cName);
+            //document.getElementById(coord(number, axelDirection)).replaceWith(cName);
             playersBlock.className = "background";
             //document.getElementById("y" + playerCoord.posY + "x" + playerCoord.posX).replaceWith(cName);
             updatePlayerCoord(number, axelDirection);
@@ -124,8 +124,13 @@ function move(number, axelDirection){
     {
         let cName = direction(number, axelDirection, true);
         cName.className = 'player';
-        document.getElementById(coord(number, axelDirection)).replaceWith(cName);
-        playersBlock.className = "background";
+        //document.getElementById(coord(number, axelDirection)).replaceWith(cName);
+        if(playerCoord.posX > 15){
+            playersBlock.className = "goal";
+        }else{
+            playersBlock.className = "background";
+        };
+        
         //document.getElementById("y" + playerCoord.posY + "x" + playerCoord.posX).replaceWith(cName);
         updatePlayerCoord(number, axelDirection);
     }
