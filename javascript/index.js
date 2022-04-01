@@ -94,23 +94,65 @@ function nextBlock(id, bool){
 function move(number, axelDirection){
     
     let playersBlock = document.getElementById("y" + playerCoord.posY + "x" + playerCoord.posX);
-    let cName = direction(number, axelDirection, false);
+    let cName = direction(number, axelDirection, true);
 
-    if(cName === "wall")
+    if(cName.className === "wall")
     {
         return;
     }
-    else if(cName === "block"){
-        cName = direction((number*2), axelDirection, false)
-        if(cName === "background")
-        {
+    else if(cName.className === "block"){
 
+        console.log(cName.className + ": " + cName.id)
+        cName = direction((number*2), axelDirection, true)
+        if(cName.className === "background" || cName.className === "goal" )
+        {
+            cName.className = "block";
+            document.getElementById(coord((number*2), axelDirection)).replaceWith(cName);
+            console.log(number + " : " + coord(number, axelDirection));
+            cName = direction(number, axelDirection, true);
+            cName.className = "player";
+            document.getElementById(coord(number, axelDirection)).replaceWith(cName);
+            playersBlock.className = "background";
+            //document.getElementById("y" + playerCoord.posY + "x" + playerCoord.posX).replaceWith(cName);
+            updatePlayerCoord(number, axelDirection);
         }else
         {
             return;
         }
+        return
+    }else
+    {
+        let cName = direction(number, axelDirection, true);
+        cName.className = 'player';
+        document.getElementById(coord(number, axelDirection)).replaceWith(cName);
+        playersBlock.className = "background";
+        //document.getElementById("y" + playerCoord.posY + "x" + playerCoord.posX).replaceWith(cName);
+        updatePlayerCoord(number, axelDirection);
     }
     return;
+}
+
+function updatePlayerCoord(number, axelDirection){
+    if(axelDirection === "x")
+    {
+        playerCoord.posX = playerCoord.posX + number;
+    }
+    else
+    {
+        playerCoord.posY = playerCoord.posY + number;
+    }
+}
+
+function coord(number, axelDirection)
+{
+    if(axelDirection === "x")
+    {
+        return ("y" + playerCoord.posY + "x" + (playerCoord.posX + number));
+    }
+    else
+    {
+        return ("y" + (playerCoord.posY + number) + "x" + (playerCoord.posX));
+    }
 }
 
 function direction(number,axelDirection, bool)

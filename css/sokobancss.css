@@ -22,6 +22,14 @@
     background-color: rgb(153, 126, 4);
     float: left;
 }
+.goal {
+    width: 45px;
+    height: 45px;
+    
+    background-color: green;
+    float: left;
+}
+
 .block {
     width: 43px;
     height: 43px;
@@ -37,11 +45,4 @@
     float: left;
 }
 
-.goal {
-    width: 45px;
-    height: 45px;
-    
-    background-color: green;
-    float: left;
-}
 
