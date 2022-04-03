@@ -67,7 +67,10 @@ function yAxel(){
         left = 1;
         selectorY = false;
         selectorX = false;
-    }else if(selectorY === true && selectorX === false){
+
+    }
+    else if(selectorY && !selectorX){
+
         for(let j=tileMap01.height-1; j >= 0;j--){
             xAxel(j);
                    
@@ -80,7 +83,7 @@ function yAxel(){
         selectorY = true;
         selectorX = true;
     }
-    else if(selectorY === false && selectorX === true){
+    else if(!selectorY && selectorX){
 
         for(let j=0; j < tileMap01.height; j++){
             xAxel(j);
@@ -95,7 +98,7 @@ function yAxel(){
         selectorX = false;
 
     }
-    else if(selectorY === false && selectorX === false) {
+    else if(!selectorY && !selectorX) {
 
         for(let j=0; j < tileMap01.height; j++){
             xAxel(j); 
