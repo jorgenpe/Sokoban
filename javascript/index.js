@@ -2,6 +2,12 @@ const playerCoord = {
     posX: -1,
     posY: -1
 }
+let selectorY =true;
+let selectorX =true;
+let up = 1;
+let down = -1;
+let right = 1;
+let left = -1;
 function makeCube(temp, coordinates ) {
     let divCube = document.createElement("div");
     divCube.className = temp;
@@ -12,10 +18,14 @@ function makeAGrid()
 {    
     clearGrid();    
     
-         for(let j=tileMap01.height-1; j >= 0;j--)
-         {
-            for(let i=0; i < tileMap01.width; i++)
-            {                
+    
+    yAxel();
+         //for(let j=tileMap01.height-1; j >= 0;j--)
+         //{
+
+            //for(let i=0; i < tileMap01.width; i++)
+            //for(let i=tileMap01.width-1; i >= 0 ; i--)
+            /*{                
                 if(tileMap01.mapGrid[j][i][0]  ===" ")
                 {
                     makeCube("background","y"+j+"x"+i);        
@@ -38,12 +48,117 @@ function makeAGrid()
                 {                
                     makeCube("wall","y"+j+"x"+i);
                 }                  
-            }            
-        }
-
-    startGame();
+            }*/            
+        //}
 }
 
+function yAxel(){
+
+    if(selectorY && selectorX ){
+        
+        for(let j=tileMap01.height-1; j >= 0;j--){
+            xAxel(j);
+                   
+        }
+        console.log("Y: " + selectorY + " X: " + selectorX);
+        up = 1;
+        down = -1;
+        right = -1;
+        left = 1;
+        selectorY = false;
+        selectorX = false;
+    }else if(selectorY === true && selectorX === false){
+        for(let j=tileMap01.height-1; j >= 0;j--){
+            xAxel(j);
+                   
+        }
+        console.log("Y: " + selectorY + " X: " + selectorX);
+        up = 1;
+        down = -1;
+        right = 1;
+        left = -1;
+        selectorY = true;
+        selectorX = true;
+    }
+    else if(selectorY === false && selectorX === true){
+
+        for(let j=0; j < tileMap01.height; j++){
+            xAxel(j);
+                   
+        }
+        console.log("Y: " + selectorY + " X: " + selectorX);
+        up = -1;
+        down = 1;
+        right = -1;
+        left = 1;
+        selectorY = true;
+        selectorX = false;
+
+    }
+    else if(selectorY === false && selectorX === false) {
+
+        for(let j=0; j < tileMap01.height; j++){
+            xAxel(j); 
+        }
+        console.log("Y: " + selectorY + " X: " + selectorX);
+        up = -1;
+        down = 1;
+        right = 1;
+        left = -1;
+        selectorY = false;
+        selectorX = true;
+    }
+
+
+}
+
+function xAxel(yCoord){
+    
+    if(selectorX === true){
+        console.log(selectorX);
+        for(let i=tileMap01.width-1; i >= 0 ; i--){
+            createMap(yCoord,i);
+        }
+        
+
+    }else if(selectorX === false){
+        console.log(selectorX);
+        for(let i=0; i < tileMap01.width; i++){
+            createMap(yCoord,i);
+        }
+        
+    }
+
+}
+
+function createMap(yPos, xPos){
+
+    if(tileMap01.mapGrid[yPos][xPos][0]  ===" ")
+                {
+                    makeCube("background","y"+yPos+"x"+xPos);        
+                }
+                else if(tileMap01.mapGrid[yPos][xPos][0] ==="P")
+                {
+                    playerCoord.posX = yPos;
+                    playerCoord.posY = xPos;
+                    makeCube("player","y"+yPos+"x"+xPos);
+                }
+                else if(tileMap01.mapGrid[yPos][xPos][0]  ==="B")
+                {
+                    makeCube("block","y"+yPos+"x"+xPos);
+                }
+                else if(tileMap01.mapGrid[yPos][xPos][0]  ==="G")
+                {
+                    makeCube("goal","y"+yPos+"x"+xPos);
+                }
+                else if(tileMap01.mapGrid[yPos][xPos][0] ==="W")
+                {                
+                    makeCube("wall","y"+yPos+"x"+xPos);
+                } 
+}
+
+
+startGame();
 function startGame(){  
     
     document.addEventListener("keydown", event => {
@@ -54,22 +169,22 @@ function startGame(){
             
             case "ArrowUp":
                 console.log("test up"); 
-                move(1,"y");
+                move(up,"y");
                 break;
             
             case "ArrowDown":
                 console.log("test down");
-                move(-1,"y");
+                move(down,"y");
                 break;
 
             case "ArrowLeft":
                 console.log("test left");
-                move(-1,"x");
+                move(left,"x");
                 break;
 
             case "ArrowRight":;
                 console.log("test right");
-                move(1,"x");
+                move(right,"x");
                 break;
             
             defalt:
