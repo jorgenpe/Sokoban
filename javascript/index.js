@@ -183,17 +183,20 @@ function startGame(){
             case "ArrowLeft":
                 console.log("test left");
                 move(left,"x");
+                                 
                 break;
 
             case "ArrowRight":;
                 console.log("test right");
                 move(right,"x");
+                
                 break;
             
             defalt:
             
             break;
-        }        
+        }
+
     })
 
 }
@@ -214,6 +217,8 @@ function move(number, axelDirection){
     let playersBlock = document.getElementById("y" + playerCoord.posY + "x" + playerCoord.posX);
     let cName = direction(number, axelDirection, true);
 
+    
+
     if(cName.className === "wall")
     {
         return;
@@ -233,6 +238,10 @@ function move(number, axelDirection){
             playersBlock.className = "background";
             //document.getElementById("y" + playerCoord.posY + "x" + playerCoord.posX).replaceWith(cName);
             updatePlayerCoord(number, axelDirection);
+            if(endGame()){
+                clearGrid();
+                document.getElementById("cubeHolder").innerHTML="You have won the game!";
+            }
         }else
         {
             return;
@@ -252,7 +261,29 @@ function move(number, axelDirection){
         //document.getElementById("y" + playerCoord.posY + "x" + playerCoord.posX).replaceWith(cName);
         updatePlayerCoord(number, axelDirection);
     }
+    
     return;
+}
+
+function endGame(){
+    console.log("hej end game");
+    let count = 0;
+    for(let j= 9; j <= 11; j++){
+        for(let i = 16; i <= 17; i++){
+
+           if(nextBlock("y"+ j +"x"+ i, false) === "block"){
+               count++
+           } 
+
+        }
+    }
+    console.log(count);
+
+        if(count === 6){
+            return true;
+        }
+        return false;
+
 }
 
 function updatePlayerCoord(number, axelDirection){
