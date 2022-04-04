@@ -235,7 +235,12 @@ function move(number, axelDirection){
             cName = direction(number, axelDirection, true);
             cName.className = "player";
             //document.getElementById(coord(number, axelDirection)).replaceWith(cName);
-            playersBlock.className = "background";
+            if(playerCoord.posX > 15){
+                playersBlock.className = "goal";
+            }else{
+                playersBlock.className = "background";
+            };
+            
             //document.getElementById("y" + playerCoord.posY + "x" + playerCoord.posX).replaceWith(cName);
             updatePlayerCoord(number, axelDirection);
             if(endGame()){
