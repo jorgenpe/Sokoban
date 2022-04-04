@@ -244,9 +244,9 @@ function move(number, axelDirection){
             //document.getElementById("y" + playerCoord.posY + "x" + playerCoord.posX).replaceWith(cName);
             updatePlayerCoord(number, axelDirection);
             if(endGame()){
-                const myDelay = setTimeout(delay,3000);
+                const myDelay = setTimeout(delay,2000);
                 function delay(){
-                    clearGrid();
+                    clearGrid();                    
                     document.getElementById("cubeHolder").innerHTML="You have won the game!";
                 }
             }
