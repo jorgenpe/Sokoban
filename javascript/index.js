@@ -16,7 +16,7 @@ function makeCube(temp, coordinates ) {
 }
 function makeAGrid()
 {    
-    clearGrid();    
+    clearGrid(false);    
     
     
     yAxel();
@@ -290,7 +290,12 @@ function direction(number,axelDirection, bool)
     }
 }
 
-function clearGrid()
+function clearGrid(boolSelect)
 {
+
+    if(boolSelect){
+        selectorY = true;
+        selectorX = true;
+    }
     document.getElementById("cubeHolder").innerHTML="";
 }
