@@ -244,8 +244,11 @@ function move(number, axelDirection){
             //document.getElementById("y" + playerCoord.posY + "x" + playerCoord.posX).replaceWith(cName);
             updatePlayerCoord(number, axelDirection);
             if(endGame()){
-                clearGrid();
-                document.getElementById("cubeHolder").innerHTML="You have won the game!";
+                const myDelay = setTimeout(delay,3000);
+                function delay(){
+                    clearGrid();
+                    document.getElementById("cubeHolder").innerHTML="You have won the game!";
+                }
             }
         }else
         {
@@ -328,7 +331,6 @@ function direction(number,axelDirection, bool)
 
 function clearGrid(boolSelect)
 {
-
     if(boolSelect){
         selectorY = true;
         selectorX = true;
