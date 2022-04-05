@@ -2,12 +2,18 @@ const playerCoord = {
     posX: -1,
     posY: -1
 }
+
 let selectorY =true;
 let selectorX =true;
 let up = 1;
 let down = -1;
 let right = 1;
 let left = -1;
+let map = tileMap01;
+let mapSelector = 1;
+let goalArray = [];
+
+
 function makeCube(temp, coordinates ) {
     let divCube = document.createElement("div");
     divCube.className = temp;
@@ -16,47 +22,26 @@ function makeCube(temp, coordinates ) {
 }
 function makeAGrid()
 {    
+    goalArray = new Array();
     clearGrid(false);    
-    
+    if(mapSelector<5){
+        map = tileMap01;
+    }else{
+        map = tileMap02;
+    }
     
     yAxel();
-         //for(let j=tileMap01.height-1; j >= 0;j--)
-         //{
-
-            //for(let i=0; i < tileMap01.width; i++)
-            //for(let i=tileMap01.width-1; i >= 0 ; i--)
-            /*{                
-                if(tileMap01.mapGrid[j][i][0]  ===" ")
-                {
-                    makeCube("background","y"+j+"x"+i);        
-                }
-                else if(tileMap01.mapGrid[j][i][0] ==="P")
-                {
-                    playerCoord.posX = j;
-                    playerCoord.posY = i;
-                    makeCube("player","y"+j+"x"+i);
-                }
-                else if(tileMap01.mapGrid[j][i][0]  ==="B")
-                {
-                    makeCube("block","y"+j+"x"+i);
-                }
-                else if(tileMap01.mapGrid[j][i][0]  ==="G")
-                {
-                    makeCube("goal","y"+j+"x"+i);
-                }
-                else if(tileMap01.mapGrid[j][i][0] ==="W")
-                {                
-                    makeCube("wall","y"+j+"x"+i);
-                }                  
-            }*/            
-        //}
+    mapSelector++;
+    if(mapSelector > 8){
+        mapSelector = 1;
+    }
 }
 
 function yAxel(){
 
     if(selectorY && selectorX ){
         
-        for(let j=tileMap01.height-1; j >= 0;j--){
+        for(let j=map.height-1; j >= 0;j--){
             xAxel(j);
                    
         }
@@ -71,7 +56,7 @@ function yAxel(){
     }
     else if(selectorY && !selectorX){
 
-        for(let j=tileMap01.height-1; j >= 0;j--){
+        for(let j= map.height-1; j >= 0;j--){
             xAxel(j);
                    
         }
@@ -85,7 +70,7 @@ function yAxel(){
     }
     else if(!selectorY && selectorX){
 
-        for(let j=0; j < tileMap01.height; j++){
+        for(let j=0; j < map.height; j++){
             xAxel(j);
                    
         }
@@ -100,7 +85,7 @@ function yAxel(){
     }
     else if(!selectorY && !selectorX) {
 
-        for(let j=0; j < tileMap01.height; j++){
+        for(let j=0; j < map.height; j++){
             xAxel(j); 
         }
         console.log("Y: " + selectorY + " X: " + selectorX);
@@ -118,15 +103,15 @@ function yAxel(){
 function xAxel(yCoord){
     
     if(selectorX === true){
-        console.log(selectorX);
-        for(let i=tileMap01.width-1; i >= 0 ; i--){
+        
+        for(let i= map.width-1; i >= 0 ; i--){
             createMap(yCoord,i);
         }
         
 
     }else if(selectorX === false){
         console.log(selectorX);
-        for(let i=0; i < tileMap01.width; i++){
+        for(let i=0; i < map.width; i++){
             createMap(yCoord,i);
         }
         
@@ -136,25 +121,26 @@ function xAxel(yCoord){
 
 function createMap(yPos, xPos){
 
-    if(tileMap01.mapGrid[yPos][xPos][0]  ===" ")
+    if(map.mapGrid[yPos][xPos][0]  ===" ")
                 {
                     makeCube("background","y"+yPos+"x"+xPos);        
                 }
-                else if(tileMap01.mapGrid[yPos][xPos][0] ==="P")
+                else if(map.mapGrid[yPos][xPos][0] ==="P")
                 {
-                    playerCoord.posX = yPos;
-                    playerCoord.posY = xPos;
+                    playerCoord.posX = xPos;
+                    playerCoord.posY = yPos;
                     makeCube("player","y"+yPos+"x"+xPos);
                 }
-                else if(tileMap01.mapGrid[yPos][xPos][0]  ==="B")
+                else if(map.mapGrid[yPos][xPos][0]  ==="B")
                 {
                     makeCube("block","y"+yPos+"x"+xPos);
                 }
-                else if(tileMap01.mapGrid[yPos][xPos][0]  ==="G")
+                else if(map.mapGrid[yPos][xPos][0]  ==="G")
                 {
                     makeCube("goal","y"+yPos+"x"+xPos);
+                    goalArray.push("y"+yPos+"x"+xPos);
                 }
-                else if(tileMap01.mapGrid[yPos][xPos][0] ==="W")
+                else if(map.mapGrid[yPos][xPos][0] ==="W")
                 {                
                     makeCube("wall","y"+yPos+"x"+xPos);
                 } 
@@ -230,18 +216,18 @@ function move(number, axelDirection){
         if(cName.className === "background" || cName.className === "goal" )
         {
             cName.className = "block";
-            //document.getElementById(coord((number*2), axelDirection)).replaceWith(cName);
+            
             console.log(number + " : " + coord(number, axelDirection));
             cName = direction(number, axelDirection, true);
             cName.className = "player";
-            //document.getElementById(coord(number, axelDirection)).replaceWith(cName);
-            if(playerCoord.posX > 15){
+            
+            if(testGoal(playersBlock.id)){
                 playersBlock.className = "goal";
             }else{
                 playersBlock.className = "background";
             };
             
-            //document.getElementById("y" + playerCoord.posY + "x" + playerCoord.posX).replaceWith(cName);
+            
             updatePlayerCoord(number, axelDirection);
             if(endGame()){
                 const myDelay = setTimeout(delay,2000);
@@ -259,38 +245,41 @@ function move(number, axelDirection){
     {
         let cName = direction(number, axelDirection, true);
         cName.className = 'player';
-        //document.getElementById(coord(number, axelDirection)).replaceWith(cName);
-        if(playerCoord.posX > 15){
+        
+        if(testGoal(playersBlock.id) ){
             playersBlock.className = "goal";
         }else{
             playersBlock.className = "background";
         };
         
-        //document.getElementById("y" + playerCoord.posY + "x" + playerCoord.posX).replaceWith(cName);
         updatePlayerCoord(number, axelDirection);
     }
     
     return;
 }
 
-function endGame(){
-    console.log("hej end game");
-    let count = 0;
-    for(let j= 9; j <= 11; j++){
-        for(let i = 16; i <= 17; i++){
-
-           if(nextBlock("y"+ j +"x"+ i, false) === "block"){
-               count++
-           } 
-
-        }
-    }
-    console.log(count);
-
-        if(count === 6){
+function testGoal(id){
+    
+    for(let i = 0; i < goalArray.length; i++){
+        console.log("id: " + id + " Array: " + goalArray[5]);
+        if(id === goalArray[i]){
+            console.log("id: " + id + " Array: " + goalArray[i]);
             return true;
         }
-        return false;
+        
+    }
+    return false;
+
+}
+
+function endGame(){
+    
+    for(let i = 0; i < goalArray.length; i++){
+        if(nextBlock(goalArray[i], false) != "block"){
+            return false;
+        }
+    }
+    return true;
 
 }
 
